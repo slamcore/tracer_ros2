@@ -26,6 +26,7 @@ find_package(nav_msgs REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(tf2 REQUIRED)
 find_package(tf2_ros REQUIRED)
+find_package(tf2_geometry_msgs REQUIRED)
 
 find_package(tracer_msgs REQUIRED)
 find_package(ugv_sdk REQUIRED)
@@ -53,18 +54,18 @@ set(DEPENDENCIES
 #   rclcpp tf2 tf2_ros std_msgs nav_msgs sensor_msgs robot_msgs)
 # target_link_libraries(mobile_base_messenger westonrobot::wrp_sdk)
 
-add_executable(tracer_base_node 
+add_executable(tracer_base_node
     src/tracer_base_ros.cpp
     src/tracer_base_node.cpp)
 target_link_libraries(tracer_base_node ugv_sdk)
-ament_target_dependencies(tracer_base_node rclcpp tf2 tf2_ros std_msgs nav_msgs sensor_msgs tracer_msgs)
+ament_target_dependencies(tracer_base_node rclcpp tf2 tf2_ros std_msgs nav_msgs sensor_msgs tracer_msgs tf2_geometry_msgs)
 
 install(TARGETS tracer_base_node
   DESTINATION lib/${PROJECT_NAME})
 
 install(DIRECTORY launch
   DESTINATION share/${PROJECT_NAME}/)
-  
+
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
   # the following line skips the linter which checks for copyrights
