@@ -59,7 +59,7 @@ class TracerMessenger {
         std::bind(&TracerMessenger::LightCmdCallback, this,
                   std::placeholders::_1));
 
-    tf_broadcaster_ = std::make_shared<tf2_ros::TransformBroadcaster>(node_);
+    // tf_broadcaster_ = std::make_shared<tf2_ros::TransformBroadcaster>(node_);
   }
 
   void PublishStateToROS() {
@@ -151,7 +151,7 @@ class TracerMessenger {
   rclcpp::Subscription<tracer_msgs::msg::TracerLightCmd>::SharedPtr
       light_cmd_sub_;
 
-  std::shared_ptr<tf2_ros::TransformBroadcaster> tf_broadcaster_;
+  // std::shared_ptr<tf2_ros::TransformBroadcaster> tf_broadcaster_;
 
   // speed variables
   double position_x_ = 0.0;
@@ -266,17 +266,17 @@ class TracerMessenger {
         createQuaternionMsgFromYaw(theta_);
 
     // publish tf transformation
-    geometry_msgs::msg::TransformStamped tf_msg;
-    tf_msg.header.stamp = current_time_;
-    tf_msg.header.frame_id = odom_frame_;
-    tf_msg.child_frame_id = base_frame_;
+    // geometry_msgs::msg::TransformStamped tf_msg;
+    // tf_msg.header.stamp = current_time_;
+    // tf_msg.header.frame_id = odom_frame_;
+    // tf_msg.child_frame_id = base_frame_;
 
-    tf_msg.transform.translation.x = position_x_;
-    tf_msg.transform.translation.y = position_y_;
-    tf_msg.transform.translation.z = 0.0;
-    tf_msg.transform.rotation = odom_quat;
+    // tf_msg.transform.translation.x = position_x_;
+    // tf_msg.transform.translation.y = position_y_;
+    // tf_msg.transform.translation.z = 0.0;
+    // tf_msg.transform.rotation = odom_quat;
 
-    tf_broadcaster_->sendTransform(tf_msg);
+    // tf_broadcaster_->sendTransform(tf_msg);
 
     // publish odometry and tf messages
     nav_msgs::msg::Odometry odom_msg;
