@@ -15,15 +15,15 @@
 namespace westonrobot {
 TracerBaseRos::TracerBaseRos(std::string node_name)
     : rclcpp::Node(node_name), keep_running_(false) {
-  this->declare_parameter("port_name");   //声明参数
+  this->declare_parameter("port_name", "can0");   //声明参数
 
-  this->declare_parameter("odom_frame");
-  this->declare_parameter("base_frame");
-  this->declare_parameter("odom_topic_name");
+  this->declare_parameter("odom_frame", "odom");
+  this->declare_parameter("base_frame", "base_link");
+  this->declare_parameter("odom_topic_name", "odom");
 
-  this->declare_parameter("is_tracer_mini");
-  this->declare_parameter("simulated_robot");
-  this->declare_parameter("control_rate");
+  this->declare_parameter("is_tracer_mini", false);
+  this->declare_parameter("simulated_robot", false);
+  this->declare_parameter("control_rate", 50);
 
   LoadParameters();
 }
@@ -67,10 +67,10 @@ bool TracerBaseRos::Initialize() {
     auto proto = detector.DetectProtocolVersion(5);
   if (proto == ProtocolVersion::AGX_V2) {
       std::cout << "Detected protocol: AGX_V2" << std::endl;
-    
+
         robot_ = std::unique_ptr<TracerRobot>();
         std::cout << "Creating interface for Tracer with AGX_V2 Protocol"
-                  << std::endl;  
+                  << std::endl;
     } else {
       std::cout << "Detected protocol: UNKONWN" << std::endl;
       return false;
@@ -120,6 +120,6 @@ void TracerBaseRos::Run() {
     rclcpp::spin_some(shared_from_this());
     rate.sleep();
   }
-  
+
 }
 }  // namespace westonrobot
