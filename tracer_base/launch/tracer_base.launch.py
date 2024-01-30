@@ -13,8 +13,8 @@ def generate_launch_description():
     use_sim_time_arg = DeclareLaunchArgument('use_sim_time', default_value='false',
                                              description='Use simulation clock if true')
 
-    port_name_arg = DeclareLaunchArgument('port_name', default_value='can0',
-                                         description='CAN bus name, e.g. can0')
+    port_name_arg = DeclareLaunchArgument('port_name', default_value='can1',
+                                         description='CAN bus name, e.g. can0') # Changed to can1 for Orin on Jetpack 6
     odom_frame_arg = DeclareLaunchArgument('odom_frame', default_value='odom',
                                            description='Odometry frame id')
     base_link_frame_arg = DeclareLaunchArgument('base_frame', default_value='base_link',
@@ -27,7 +27,7 @@ def generate_launch_description():
                                                    description='Whether running with simulator')
     sim_control_rate_arg = DeclareLaunchArgument('control_rate', default_value='50',
                                                  description='Simulation control loop update rate')
-    
+
     tracer_base_node = launch_ros.actions.Node(
         package='tracer_base',
         executable='tracer_base_node',
@@ -35,7 +35,7 @@ def generate_launch_description():
         emulate_tty=True,
         parameters=[{
                 'use_sim_time': launch.substitutions.LaunchConfiguration('use_sim_time'),
-                'port_name': launch.substitutions.LaunchConfiguration('port_name'),                
+                'port_name': launch.substitutions.LaunchConfiguration('port_name'),
                 'odom_frame': launch.substitutions.LaunchConfiguration('odom_frame'),
                 'base_frame': launch.substitutions.LaunchConfiguration('base_frame'),
                 'odom_topic_name': launch.substitutions.LaunchConfiguration('odom_topic_name'),
@@ -46,7 +46,7 @@ def generate_launch_description():
 
     return LaunchDescription([
         use_sim_time_arg,
-        port_name_arg,        
+        port_name_arg,
         odom_frame_arg,
         base_link_frame_arg,
         odom_topic_arg,
